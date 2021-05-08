@@ -1,0 +1,96 @@
+/*noinspection CssInvalidAtRule*/
+@import-normalize;
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.7;
+    font-size: 0.75em;
+}
+
+.content-container {
+    max-width: 500px;
+    padding: 10px;
+}
+
+/* h */
+h1, h2 {
+    margin-block-start: 0.8em;
+    margin-block-end: 0.5em;
+}
+
+h3, h4, h5 {
+    margin-block-start: 0.8em;
+    margin-block-end: 0.8em;
+}
+
+/* details & summary */
+details details {
+    margin-left: 10px;
+}
+summary * {
+    display: inline-block;
+}
+
+/* ul li */
+ul {
+    list-style-type: none;
+    margin-block-start: inherit;
+    margin-block-end: inherit;
+    margin-inline-start: inherit;
+    margin-inline-end: inherit;
+    padding-inline-start: initial;
+}
+li {
+    padding-block-start: 6px;
+}
+li:before {
+    content: "• ";
+}
+li .left{
+    display: inline;
+    margin-inline-end: 5px;
+}
+li .right{
+    display: inline;
+}
+
+/* Numbers */
+.num {
+    /*border-bottom: 1px dotted #585858;*/
+    margin: 0 2px;
+    font-weight: 600;
+}
+small .num, .num > small{
+    font-weight: normal;
+    margin: 0 5px;
+}
+
+
+/* card */
+.card {
+    background-color: #f5f5f5;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 2px solid #dedede;
+    border-radius: 5px;
+}
+
+.card .card-header {
+}
+
+.card .card-body {
+    padding: 6px 18px;
+}
+
+details .card {
+    margin-left: 10px;
+}
+
+.card summary * {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
