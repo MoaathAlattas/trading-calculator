@@ -1,6 +1,7 @@
 import 'simple-css-grid/css/simple-grid.css'
 import './style.css'
 import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} from './calc'
+import AddOrdersForm from './AddOrdersForm'
 
 function App() {
     const orders_list = [
@@ -13,6 +14,19 @@ function App() {
     const summary = objToFixed(getEndingCalc(orders_enhanced));
     return (
         <div className="content-container">
+
+            {/* Add Order Form */}
+            <details open>
+                <summary><h2>Add Order</h2></summary>
+                <div className="card">
+                    <div className="card-body">
+                        <AddOrdersForm />
+                    </div>
+                </div>
+
+            </details>
+
+
             {/* Order */}
             <details open>
                 <summary><h2>Orders</h2> <small>({orders.length})</small></summary>
