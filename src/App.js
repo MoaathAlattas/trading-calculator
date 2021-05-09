@@ -9,6 +9,12 @@ import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} f
 
 function App() {
 
+    // profit percentage
+    const [profitPercentage, setProfitPercentage] = useState(0.02)
+    const onChange = ({target}) => {
+        setProfitPercentage(target.value)
+    }
+
     // form state
     const reducer = (state, action) => {
         switch (action.type) {
@@ -32,9 +38,10 @@ function App() {
     const [orders_list, setOrders] = useState(OrdersInit)
 
     // order calculations
-    const orders_enhanced = orders_list.map(withTotalValue).reduce(withOrdersCalc, []);
+    const orders_enhanced = orders_list.map(withTotalValue)
+                                       .reduce(withOrdersCalc(profitPercentage), []);
     const orders = arrToFixed(orders_enhanced);
-    const summary = objToFixed(getEndingCalc(orders_enhanced));
+    const summary = objToFixed(getEndingCalc(orders_enhanced, profitPercentage));
 
     // remove orders
     const onRemoveOrder = ({target}) => {
@@ -46,6 +53,19 @@ function App() {
 
     return (
         <div className="content-container">
+            <details open>
+                <summary><h2>Settings</h2></summary>
+                <div className="card">
+                    <div className="card-body">
+                        <form>
+                            <label htmlFor="percentage">Profit Percentage</label>
+                            <input type="number"
+                                   onChange={onChange}
+                                   defaultValue={profitPercentage}/>
+                        </form>
+                    </div>
+                </div>
+            </details>
 
             {/* Add Order Form */}
             <details open>
