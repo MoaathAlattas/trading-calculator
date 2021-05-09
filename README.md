@@ -1,4 +1,8 @@
 
+# Example
+https://simple-trading-calculator.netlify.app/
+
+# Screenshot
 <img src="./trading-calculator.png" width="300" />
 
 # Getting Started with Create React App
