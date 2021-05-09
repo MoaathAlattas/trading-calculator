@@ -58,7 +58,7 @@ li .right{
     display: inline;
 }
 
-/* Numbers */
+/* Numbers & Currency */
 .num {
     /*border-bottom: 1px dotted #585858;*/
     margin: 0 2px;
@@ -68,7 +68,12 @@ small .num, .num > small{
     font-weight: normal;
     margin: 0 5px;
 }
-
+.currency{
+    color: hsl(217, 71%, 53%);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 1px;
+}
 
 /* card */
 .card {
@@ -117,7 +122,7 @@ form label {
     margin-block-end: 2px;
     font-weight: 500;
 }
-form input[type=number] {
+form input  {
     width: 100%;
     display: block;
     border-radius: 5px;
@@ -126,9 +131,6 @@ form input[type=number] {
     padding: 10px;
     border-width: 0 0 2px 0;
     border-bottom: 2px solid #dedede;
-}
-for, impot[type=number]:focus {
-    border: 2px solid #4CAF50;
 }
 
 form button[type=submit] {

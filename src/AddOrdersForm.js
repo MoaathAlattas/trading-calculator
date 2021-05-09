@@ -1,7 +1,10 @@
+import {Currency} from "./currency";
+
 function AddOrdersForm({
                            formInitState: initState,
                            formState: [state, dispatch],
-                           dataState: [data, setData]
+                           dataState: [data, setData],
+                           settings: settings
                        }) {
 
     const onSubmit = (e) => {
@@ -22,7 +25,7 @@ function AddOrdersForm({
         <form onSubmit={onSubmit}>
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="buy">Buy Price</label>
+                    <label htmlFor="buy">Buy Price <Currency settings={settings} type="buy" /></label>
                     <input onChange={onChange} defaultValue={initState.buy}
                            type="number" name="buy" id="buy"/>
                 </div>

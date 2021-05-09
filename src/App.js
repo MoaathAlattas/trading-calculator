@@ -5,16 +5,21 @@ import {useReducer, useState} from "react";
 import AddOrdersForm from './AddOrdersForm'
 import SettingsForm from './Settings'
 import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} from './calc'
-
+import {Currency} from './currency'
 
 function App() {
-
     // profit percentage
-    const initSettings = { profitPercentage:0.02 }
+    const initSettings = { percentage:0.02, buy:"ETC", sell:"USDT", fee: "0.0075"}
     const settingsReducer = (state, action) =>{
         switch (action.type){
-            case 'profitPercentage':
-                return {...state, profitPercentage: action.payload}
+            case 'percentage':
+                return {...state, percentage: action.payload}
+            case 'buy':
+                return {...state, buy: action.payload}
+            case 'sell':
+                return {...state, sell: action.payload}
+            case 'fee':
+                return {...state, sell: action.payload}
             default:
                 throw new Error()
         }
@@ -45,9 +50,9 @@ function App() {
 
     // order calculations
     const orders_enhanced = orders_list.map(withTotalValue)
-                                       .reduce(withOrdersCalc(settings.profitPercentage), []);
+                                       .reduce(withOrdersCalc(settings.percentage), []);
     const orders = arrToFixed(orders_enhanced);
-    const summary = objToFixed(getEndingCalc(orders_enhanced, settings.profitPercentage));
+    const summary = objToFixed(getEndingCalc(orders_enhanced, settings.percentage));
 
     // remove orders
     const onRemoveOrder = ({target}) => {
@@ -82,6 +87,7 @@ function App() {
                             formInitState={formInitState}
                             formState={formState}
                             dataState={[orders_list, setOrders]}
+                            settings={settings}
                         />
                     </div>
                 </div>
@@ -96,9 +102,15 @@ function App() {
                             <summary className="card-header">
                                 <h3> Buy ({i + 1})</h3>
                                 <small>
-                                    <span className="num">{order.buy}</span> *
+                                    <span className="num">
+                                        {order.buy}
+                                        <Currency settings={settings} type="buy" />
+                                    </span> *
                                     <span className="num">{order.quantity}</span> =
-                                    <span className="num">{order.value}</span>
+                                    <span className="num">
+                                        {order.value}
+                                        <Currency settings={settings} type="sell" />
+                                    </span>
                                 </small>
                                 <button type="submit"
                                         className="remove"
@@ -112,7 +124,10 @@ function App() {
                                         <ul>
                                             <li>
                                                 <span className="left">Buy Price:</span>
-                                                <span className="right num">{order.buy}</span>
+                                                <span className="right num">
+                                                    {order.buy}
+                                                    <Currency settings={settings} type="buy" />
+                                                </span>
                                             </li>
                                             <li>
                                                 <span className="left">Quantity:</span>
@@ -120,7 +135,10 @@ function App() {
                                             </li>
                                             <li>
                                                 <span className="left">Value:</span>
-                                                <span className="right num">{order.total_orders_value}</span>
+                                                <span className="right num">
+                                                    {order.total_orders_value}
+                                                    <Currency settings={settings} type="sell" />
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>
@@ -128,15 +146,24 @@ function App() {
                                         <ul>
                                             <li>
                                                 <span className="left">Sell Price:</span>
-                                                <span className="right num">{order.sell_price}</span>
+                                                <span className="right num">
+                                                    {order.sell_price}
+                                                    <Currency settings={settings} type="sell" />
+                                                </span>
                                             </li>
                                             <li>
                                                 <span className="left">Estimated Profit:</span>
-                                                <span className="right num">{order.estimated_profit}</span>
+                                                <span className="right num">
+                                                    {order.estimated_profit}
+                                                    <Currency settings={settings} type="sell" />
+                                                </span>
                                             </li>
                                             <li>
                                                 <span className="left">Value After Sell:</span>
-                                                <span className="right num">{order.value_after_sell}</span>
+                                                <span className="right num">
+                                                    {order.value_after_sell}
+                                                    <Currency settings={settings} type="sell" />
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>
@@ -148,7 +175,6 @@ function App() {
                 ))}
             </details>
 
-
             {/* Summary */}
             <details open>
                 <summary><h2>Summary</h2></summary>
@@ -159,14 +185,18 @@ function App() {
                                 <span className="left">Total Trade Value:</span>
                                 <span className="right num">
                                     {summary.total_orders_value}
-                                    <small>({summary.total_orders_quantity})</small>
+                                    <Currency settings={settings} type="sell" />
+                                    <small>
+                                        ({summary.total_orders_quantity} <Currency settings={settings} type="buy" />)
+
+                                    </small>
                                 </span>
                             </li>
                             <li>
                                 <span className="left">Total Value After Sell:</span>
                                 <span className="right num">
-                                    {summary.value_after_sell}
-                                    <small>({summary.estimated_profit})</small>
+                                    {summary.value_after_sell} <Currency settings={settings} type="sell" />
+                                    <small>(Profit: {summary.estimated_profit} <Currency settings={settings} type="sell" />)</small>
                                 </span>
                             </li>
                         </ul>
