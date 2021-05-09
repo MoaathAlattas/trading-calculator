@@ -41,7 +41,6 @@ function App() {
                                     <span className="num">{order.value}</span></small>
                             </summary>
                             <div className="card-body">
-                                <div className="container">
                                     <div className="row">
                                         <div className="col-6">
                                             <ul>
@@ -76,7 +75,6 @@ function App() {
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </details>
 

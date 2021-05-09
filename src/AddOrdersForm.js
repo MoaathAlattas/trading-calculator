@@ -27,18 +27,19 @@ function AddOrdersForm(props) {
 
     return (
         <form onSubmit={onSubmit}>
-            <div>
-                <label htmlFor="buy">Buy Price: </label>
-                <input onChange={onChange} type="number" name="buy" id="buy"/>
-            </div>
-            <div>
-                <label htmlFor="quantity">Quantity Price: </label>
-                <input onChange={onChange} type="number" name="quantity" id="quantity" />
+            <div className="row">
+                <div className="col-6">
+                    <label htmlFor="buy">Buy Price</label>
+                    <input onChange={onChange} type="number" name="buy" id="buy"/>
+                </div>
+                <div className="col-6">
+                    <label htmlFor="quantity">Quantity Price</label>
+                    <input onChange={onChange} type="number" name="quantity" id="quantity"/>
+                </div>
             </div>
             <div>
                 <button type="submit">Add</button>
             </div>
-
         </form>
     )
 }
