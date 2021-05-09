@@ -1,4 +1,5 @@
-![](./trading-calculator.png)
+
+<img src="./trading-calculator.png" width="300" />
 
 # Getting Started with Create React App
 
