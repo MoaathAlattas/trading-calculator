@@ -6,9 +6,10 @@ function AddOrdersForm({
 
     const onSubmit = (e) => {
         e.preventDefault()
+        const id = '_' + Math.random().toString(36).substr(2, 9);
         setData([
             ...data,
-            {...state}
+            {...state, id}
         ])
         console.log("a new order has been added.")
     }

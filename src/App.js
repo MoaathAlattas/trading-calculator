@@ -25,9 +25,9 @@ function App() {
 
     // order state
     const OrdersInit = [
-        {buy: 137.5, quantity: 39.564},
-        {buy: 135, quantity: 28.208},
-        {buy: 133, quantity: 12.271},
+        {id: '_veldng1fb', buy: 137.5, quantity: 39.564},
+        {id: '_ybmdos8ev', buy: 135, quantity: 28.208},
+        {id: '_d37395pou', buy: 133, quantity: 12.271},
     ];
     const [orders_list, setOrders] = useState(OrdersInit)
 
@@ -37,10 +37,10 @@ function App() {
     const summary = objToFixed(getEndingCalc(orders_enhanced));
 
     // remove orders
-    const onRemoveOrder = ({target}) =>{
-        const elm = JSON.parse(target.dataset.order)
-        const removed = orders.filter(order=> order.buy !== elm.buy)
-        setOrders(removed)
+    const onRemoveOrder = ({target}) => {
+        const orderId = target.dataset.orderid
+        const listAfterRemoval = orders.filter(order => order.id !== orderId)
+        setOrders(listAfterRemoval)
         console.log("The order has been removed.")
     }
 
@@ -61,12 +61,11 @@ function App() {
                 </div>
             </details>
 
-
             {/* Order */}
             <details open>
                 <summary><h2>Orders</h2> <small>({orders.length})</small></summary>
                 {orders.map((order, i) => (
-                    <div className="card" key={i}>
+                    <div className="card" key={order.id}>
                         <details>
                             <summary className="card-header">
                                 <h3> Buy ({i + 1})</h3>
@@ -78,43 +77,44 @@ function App() {
                                 <button type="submit"
                                         className="remove"
                                         onClick={onRemoveOrder}
-                                        data-order={JSON.stringify(order)}>x</button>
+                                        data-orderid={order.id}>x
+                                </button>
                             </summary>
                             <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <ul>
-                                                <li>
-                                                    <span className="left">Buy Price:</span>
-                                                    <span className="right num">{order.buy}</span>
-                                                </li>
-                                                <li>
-                                                    <span className="left">Quantity:</span>
-                                                    <span className="right num">{order.quantity}</span>
-                                                </li>
-                                                <li>
-                                                    <span className="left">Value:</span>
-                                                    <span className="right num">{order.total_orders_value}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="col-6">
-                                            <ul>
-                                                <li>
-                                                    <span className="left">Sell Price:</span>
-                                                    <span className="right num">{order.sell_price}</span>
-                                                </li>
-                                                <li>
-                                                    <span className="left">Estimated Profit:</span>
-                                                    <span className="right num">{order.estimated_profit}</span>
-                                                </li>
-                                                <li>
-                                                    <span className="left">Value After Sell:</span>
-                                                    <span className="right num">{order.value_after_sell}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <ul>
+                                            <li>
+                                                <span className="left">Buy Price:</span>
+                                                <span className="right num">{order.buy}</span>
+                                            </li>
+                                            <li>
+                                                <span className="left">Quantity:</span>
+                                                <span className="right num">{order.quantity}</span>
+                                            </li>
+                                            <li>
+                                                <span className="left">Value:</span>
+                                                <span className="right num">{order.total_orders_value}</span>
+                                            </li>
+                                        </ul>
                                     </div>
+                                    <div className="col-6">
+                                        <ul>
+                                            <li>
+                                                <span className="left">Sell Price:</span>
+                                                <span className="right num">{order.sell_price}</span>
+                                            </li>
+                                            <li>
+                                                <span className="left">Estimated Profit:</span>
+                                                <span className="right num">{order.estimated_profit}</span>
+                                            </li>
+                                            <li>
+                                                <span className="left">Value After Sell:</span>
+                                                <span className="right num">{order.value_after_sell}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </details>
 
