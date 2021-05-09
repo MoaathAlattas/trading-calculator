@@ -26,7 +26,7 @@ function App() {
                 throw new Error()
         }
     }
-    const [settings, setSettings] = useReducer(settingsReducer, initSettings)
+    const [settings, dispatchSettings] = useReducer(settingsReducer, initSettings)
 
     // form state
     const formInitState = {buy: 0, quantity: 0}
@@ -46,8 +46,8 @@ function App() {
 
     // order state
     const OrdersInit = [
-        {id: '_veldng1fb', buy: 137.5, quantity: 39.564},
-        {id: '_ybmdos8ev', buy: 135, quantity: 28.208},
+        {id: '_veldng1fb', buy: 137.5, quantity: 39.564, state: 0},
+        {id: '_ybmdos8ev', buy: 135, quantity: 28.208, state: 0},
     ];
     const [orders_list, setOrders] = useState(OrdersInit)
 
@@ -68,7 +68,7 @@ function App() {
     // Reset
     const onReset = () =>{
         // settings
-        setSettings({type: 'reset'})
+        dispatchSettings({type: `reset`})
 
         // add order
         setFormState({type: 'reset'})
@@ -96,7 +96,7 @@ function App() {
                     <div className="card-body">
                         <SettingsForm
                             formInitState={initSettings}
-                            formState={[settings, setSettings]}
+                            formState={[settings, dispatchSettings]}
                         />
                     </div>
                 </div>
@@ -124,23 +124,30 @@ function App() {
                     <div className="card" key={order.id}>
                         <details>
                             <summary className="card-header">
-                                <h3> Buy ({i + 1})</h3>
-                                <small>
-                                    <span className="num">
-                                        {order.buy}
-                                        <Currency settings={settings} type="buy"/>
-                                    </span> *
-                                    <span className="num">{order.quantity}</span> =
-                                    <span className="num">
-                                        {order.value}
-                                        <Currency settings={settings} type="sell"/>
-                                    </span>
-                                </small>
-                                <button type="submit"
-                                        className="remove"
-                                        onClick={onRemoveOrder}
-                                        data-orderid={order.id}>x
-                                </button>
+                                    <input type="checkbox"
+                                           className="order-state"
+                                           id="state"
+                                           name="state"
+                                    />
+                                    <h3> Buy ({i + 1})</h3>
+                                    <small>
+                                        <span className="num">
+                                            {order.buy}
+                                            <Currency settings={settings} type="buy"/>
+                                        </span> *
+                                        <span className="num">{order.quantity}</span> =
+                                        <span className="num">
+                                            {order.value}
+                                            <Currency settings={settings} type="sell"/>
+                                        </span>
+                                    </small>
+                                    {orders.length > 1 &&
+                                    <button type="button"
+                                            className="remove"
+                                            onClick={onRemoveOrder}
+                                            data-orderid={order.id}>x
+                                    </button>
+                                    }
                             </summary>
                             <div className="card-body">
                                 <div className="row">
@@ -194,7 +201,6 @@ function App() {
                                 </div>
                             </div>
                         </details>
-
                     </div>
                 ))}
             </details>

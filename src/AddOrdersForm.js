@@ -10,10 +10,7 @@ function AddOrdersForm({
     const onSubmit = (e) => {
         e.preventDefault()
         const id = '_' + Math.random().toString(36).substr(2, 9);
-        setData([
-            ...data,
-            {...state, id}
-        ])
+        setData([...data, {...state, id, state:0} ])
         console.log("a new order has been added.")
     }
 
@@ -25,9 +22,11 @@ function AddOrdersForm({
         <form onSubmit={onSubmit}>
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="buy">Buy Price <Currency settings={settings} type="buy" /></label>
+                    <label htmlFor="buyPrice">
+                        Buy Price <Currency settings={settings} type="buy" />
+                    </label>
                     <input onChange={onChange} value={state.buy}
-                           type="number" name="buy" id="buy"/>
+                           type="number" name="buy" id="buyPrice"/>
                 </div>
                 <div className="col-6">
                     <label htmlFor="quantity">Quantity</label>

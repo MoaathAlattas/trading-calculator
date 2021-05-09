@@ -1,6 +1,7 @@
 /*noinspection CssInvalidAtRule*/
 @import-normalize;
 
+/* Global */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -9,11 +10,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.7;
     font-size: 0.75em;
-}
-
-.content-container {
-    max-width: 500px;
-    padding: 10px;
 }
 
 /* h */
@@ -31,8 +27,23 @@ h3, h4, h5 {
 details details {
     margin-left: 10px;
 }
+summary {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 summary * {
     display: inline-block;
+    cursor: pointer;
+}
+summary:active {
+    color: #3e3e3e;
+}
+summary:focus {
+    outline: none;
 }
 
 /* ul li */
@@ -56,6 +67,12 @@ li .left{
 }
 li .right{
     display: inline;
+}
+
+/* containers */
+.content-container {
+    max-width: 500px;
+    padding: 10px;
 }
 
 /* Numbers & Currency */
@@ -97,6 +114,9 @@ small .num, .num > small{
     border-radius: 50%;
     background: none;
     font-size: 1.2em;
+}
+.order-state {
+    margin-inline-end: 5px;
 }
 
 .card .card-body {
@@ -160,5 +180,4 @@ form button[type=reset] {
 form button[type=reset]:active {
     filter: brightness(0.9);
 }
-
 
