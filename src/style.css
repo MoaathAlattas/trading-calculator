@@ -81,6 +81,18 @@ small .num, .num > small{
 
 .card .card-header {
 }
+.card .card-header .remove {
+    cursor: pointer;
+    color: red;
+    font-weight: 700;
+    float: right;
+    margin-inline-end: 12px;
+    border: none;
+    padding: 3px;
+    border-radius: 50%;
+    background: none;
+    font-size: 1.2em;
+}
 
 .card .card-body {
     padding: 6px 18px;
@@ -122,12 +134,12 @@ for, impot[type=number]:focus {
 form button[type=submit] {
     display: block;
     width: 100%;
-    /*font-size: 1.3em;*/
     font-weight: 500;
     padding: 10px ;
     color: #fff;
     border: none;
     background-color: #4CAF50;
+    border-radius: 5px;
 }
 form button[type=submit]:active {
     filter: brightness(0.9);

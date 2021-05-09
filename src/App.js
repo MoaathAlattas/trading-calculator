@@ -30,9 +30,20 @@ function App() {
         {buy: 133, quantity: 12.271},
     ];
     const [orders_list, setOrders] = useState(OrdersInit)
+
+    // order calculations
     const orders_enhanced = orders_list.map(withTotalValue).reduce(withOrdersCalc, []);
     const orders = arrToFixed(orders_enhanced);
     const summary = objToFixed(getEndingCalc(orders_enhanced));
+
+    // remove orders
+    const onRemoveOrder = ({target}) =>{
+        const elm = JSON.parse(target.dataset.order)
+        const removed = orders.filter(order=> order.buy !== elm.buy)
+        setOrders(removed)
+        console.log("The order has been removed.")
+    }
+
     return (
         <div className="content-container">
 
@@ -62,7 +73,12 @@ function App() {
                                 <small>
                                     <span className="num">{order.buy}</span> *
                                     <span className="num">{order.quantity}</span> =
-                                    <span className="num">{order.value}</span></small>
+                                    <span className="num">{order.value}</span>
+                                </small>
+                                <button type="submit"
+                                        className="remove"
+                                        onClick={onRemoveOrder}
+                                        data-order={JSON.stringify(order)}>x</button>
                             </summary>
                             <div className="card-body">
                                     <div className="row">
