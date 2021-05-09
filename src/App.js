@@ -3,17 +3,23 @@ import './style.css'
 
 import {useReducer, useState} from "react";
 import AddOrdersForm from './AddOrdersForm'
-
+import SettingsForm from './Settings'
 import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} from './calc'
 
 
 function App() {
 
     // profit percentage
-    const [profitPercentage, setProfitPercentage] = useState(0.02)
-    const onChange = ({target}) => {
-        setProfitPercentage(target.value)
+    const initSettings = { profitPercentage:0.02 }
+    const settingsReducer = (state, action) =>{
+        switch (action.type){
+            case 'profitPercentage':
+                return {...state, profitPercentage: action.payload}
+            default:
+                throw new Error()
+        }
     }
+    const [settings, setSettings] = useReducer(settingsReducer, initSettings)
 
     // form state
     const reducer = (state, action) => {
@@ -39,9 +45,9 @@ function App() {
 
     // order calculations
     const orders_enhanced = orders_list.map(withTotalValue)
-                                       .reduce(withOrdersCalc(profitPercentage), []);
+                                       .reduce(withOrdersCalc(settings.profitPercentage), []);
     const orders = arrToFixed(orders_enhanced);
-    const summary = objToFixed(getEndingCalc(orders_enhanced, profitPercentage));
+    const summary = objToFixed(getEndingCalc(orders_enhanced, settings.profitPercentage));
 
     // remove orders
     const onRemoveOrder = ({target}) => {
@@ -53,16 +59,16 @@ function App() {
 
     return (
         <div className="content-container">
+
+            {/* settings form*/}
             <details open>
                 <summary><h2>Settings</h2></summary>
                 <div className="card">
                     <div className="card-body">
-                        <form>
-                            <label htmlFor="percentage">Profit Percentage</label>
-                            <input type="number"
-                                   onChange={onChange}
-                                   defaultValue={profitPercentage}/>
-                        </form>
+                        <SettingsForm
+                            formInitState={initSettings}
+                            formState={[settings, setSettings]}
+                        />
                     </div>
                 </div>
             </details>
