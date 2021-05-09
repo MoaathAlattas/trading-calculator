@@ -147,4 +147,18 @@ form button[type=submit]:active {
     filter: brightness(0.9);
 }
 
+form button[type=reset] {
+    display: block;
+    width: 100%;
+    font-weight: 500;
+    padding: 10px ;
+    color: #fff;
+    border: none;
+    background-color: hsl(348, 100%, 61%);
+    border-radius: 5px;
+}
+form button[type=reset]:active {
+    filter: brightness(0.9);
+}
+
 

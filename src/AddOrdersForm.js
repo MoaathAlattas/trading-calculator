@@ -4,7 +4,7 @@ function AddOrdersForm({
                            formInitState: initState,
                            formState: [state, dispatch],
                            dataState: [data, setData],
-                           settings: settings
+                           settings
                        }) {
 
     const onSubmit = (e) => {
@@ -26,12 +26,12 @@ function AddOrdersForm({
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="buy">Buy Price <Currency settings={settings} type="buy" /></label>
-                    <input onChange={onChange} defaultValue={initState.buy}
+                    <input onChange={onChange} value={state.buy}
                            type="number" name="buy" id="buy"/>
                 </div>
                 <div className="col-6">
                     <label htmlFor="quantity">Quantity</label>
-                    <input onChange={onChange} defaultValue={initState.quantity}
+                    <input onChange={onChange} value={state.quantity}
                            type="number" name="quantity" id="quantity"/>
                 </div>
             </div>

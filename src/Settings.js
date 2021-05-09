@@ -1,15 +1,9 @@
-function SettingsForm({formInitState: initState, formState: [_, dispatch]}) {
+function SettingsForm({formInitState: initState, formState: [state, dispatch]}) {
 
-    const onChange = ({target}) => {
-        let name = target.name
-        let value = target.value
-        if (name === 'percentage' || 'fee'){
-            value = parseFloat(target.value)
-        }
-        dispatch({
-            type: target.name, payload: target.value
-        })
-    }
+    const onChange = ({target}) => dispatch({
+        type: target.name, payload: target.value
+    })
+
 
     return (
         <form>
@@ -21,7 +15,7 @@ function SettingsForm({formInitState: initState, formState: [_, dispatch]}) {
                                name="percentage"
                                id="percentage"
                                onChange={onChange}
-                               defaultValue={initState.percentage}/>
+                               value={state.percentage} />
                     </div>
                 </div>
                 <div className="col-6">
@@ -31,7 +25,7 @@ function SettingsForm({formInitState: initState, formState: [_, dispatch]}) {
                                name="fee"
                                id="fee"
                                onChange={onChange}
-                               defaultValue={initState.fee}/>
+                               value={state.fee} />
                     </div>
                 </div>
             </div>
@@ -42,7 +36,7 @@ function SettingsForm({formInitState: initState, formState: [_, dispatch]}) {
                            name="buy"
                            id="buy"
                            onChange={onChange}
-                           defaultValue={initState.buy}/>
+                           value={state.buy} />
                 </div>
                 <div className="col-6">
                     <label htmlFor="sell">Sell Currency</label>
@@ -50,7 +44,7 @@ function SettingsForm({formInitState: initState, formState: [_, dispatch]}) {
                            name="sell"
                            id="sell"
                            onChange={onChange}
-                           defaultValue={initState.sell}/>
+                           value={state.sell} />
                 </div>
             </div>
 
