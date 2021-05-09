@@ -1,14 +1,35 @@
 import 'simple-css-grid/css/simple-grid.css'
 import './style.css'
-import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} from './calc'
+
+import {useReducer, useState} from "react";
 import AddOrdersForm from './AddOrdersForm'
 
+import {getEndingCalc, withTotalValue, withOrdersCalc, objToFixed, arrToFixed} from './calc'
+
+
 function App() {
-    const orders_list = [
-        {status: false, buy: 137.5, quantity: 39.564},
-        {status: false, buy: 135, quantity: 28.208},
-        {status: false, buy: 133, quantity: 12.271},
+
+    // form state
+    const reducer = (state, action) => {
+        switch (action.type) {
+            case 'buy':
+                return {...state, buy: action.payload}
+            case 'quantity':
+                return {...state, quantity: action.payload}
+            default:
+                throw new Error()
+        }
+    }
+    const formInitState = {buy: 0, quantity: 0}
+    const formState = useReducer(reducer, formInitState)
+
+    // order state
+    const OrdersInit = [
+        {buy: 137.5, quantity: 39.564},
+        {buy: 135, quantity: 28.208},
+        {buy: 133, quantity: 12.271},
     ];
+    const [orders_list, setOrders] = useState(OrdersInit)
     const orders_enhanced = orders_list.map(withTotalValue).reduce(withOrdersCalc, []);
     const orders = arrToFixed(orders_enhanced);
     const summary = objToFixed(getEndingCalc(orders_enhanced));
@@ -20,10 +41,13 @@ function App() {
                 <summary><h2>Add Order</h2></summary>
                 <div className="card">
                     <div className="card-body">
-                        <AddOrdersForm />
+                        <AddOrdersForm
+                            formInitState={formInitState}
+                            formState={formState}
+                            dataState={[orders_list, setOrders]}
+                        />
                     </div>
                 </div>
-
             </details>
 
 

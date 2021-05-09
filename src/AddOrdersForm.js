@@ -1,28 +1,20 @@
-import {useReducer} from 'react'
-
-function AddOrdersForm(props) {
-
-    const reducer = (state, action) => {
-        switch (action.type) {
-            case 'buy':
-                return {...state, buy: action.payload}
-            case 'quantity':
-                return {...state, quantity: action.payload}
-            default:
-                throw new Error()
-        }
-    }
-    const initState = {buy: 0, quantity: 0}
-    const [state, dispatch] = useReducer(reducer, initState)
+function AddOrdersForm({
+                           formInitState: initState,
+                           formState: [state, dispatch],
+                           dataState: [data, setData]
+                       }) {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(state)
-        return console.log("Submitted!")
+        setData([
+            ...data,
+            {...state}
+        ])
+        console.log("a new order has been added.")
     }
 
     const onChange = ({target}) => dispatch({
-        type: target.name, payload: target.value
+        type: target.name, payload: parseFloat(target.value)
     })
 
     return (
@@ -30,11 +22,13 @@ function AddOrdersForm(props) {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="buy">Buy Price</label>
-                    <input onChange={onChange} type="number" name="buy" id="buy"/>
+                    <input onChange={onChange} defaultValue={initState.buy}
+                           type="number" name="buy" id="buy"/>
                 </div>
                 <div className="col-6">
-                    <label htmlFor="quantity">Quantity Price</label>
-                    <input onChange={onChange} type="number" name="quantity" id="quantity"/>
+                    <label htmlFor="quantity">Quantity</label>
+                    <input onChange={onChange} defaultValue={initState.quantity}
+                           type="number" name="quantity" id="quantity"/>
                 </div>
             </div>
             <div>
